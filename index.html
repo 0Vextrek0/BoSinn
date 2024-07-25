@@ -20,14 +20,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1; 
+            z-index: -1;
             filter: blur(1000px);
-            transition: filter 0.5s ease-out; 
+            transition: filter 0.5s ease-out;
         }
         .content {
             position: relative;
-            z-index: 1; 
-            color: white; 
+            z-index: 1;
+            color: white;
             text-align: center;
             padding: 20px;
         }
@@ -75,35 +75,35 @@
     </div>
 
     <script>
-        let is = true;
         document.addEventListener('DOMContentLoaded', function() {
             const cookieBanner = document.getElementById('cookieBanner');
             const acceptCookies = document.getElementById('acceptCookies');
             const video = document.getElementById('videoBackground');
 
-            if (!document.cookie.split('; ').find(row => row.startsWith('cookies_accepted='))) {
+            // Function to check if cookies are accepted
+            function areCookiesAccepted() {
+                return document.cookie.split('; ').find(row => row.startsWith('cookies_accepted='));
+            }
+
+            // Show cookie banner if cookies are not accepted
+            if (!areCookiesAccepted()) {
                 cookieBanner.style.display = 'block';
+                video.style.filter = 'blur(1000px)';
+                video.volume = 0;
+            } else {
+                // Apply settings for accepted cookies
+                video.style.filter = 'none';
+                video.volume = 1;
             }
 
             acceptCookies.addEventListener('click', function() {
-                if (is === true);
-            {
-                document.cookie = "cookies_accepted=true; path=/; max-age=" + (60*60*24*365); 
+                document.cookie = "cookies_accepted=true; path=/; max-age=" + (60*60*24*365);
                 cookieBanner.style.display = 'none';
-                document.querySelector('.video-background').style.filter = 'none'; 
-                video.volume = 1; 
-                is = false;
-            }
+                video.style.filter = 'none';
+                video.volume = 1;
             });
-
-            video.volume = 0;
         });
-        if (is === false) {
-            document.cookie = "cookies_accepted=true; path=/; max-age=" + (60*60*24*365); 
-                cookieBanner.style.display = 'none';
-                document.querySelector('.video-background').style.filter = 'none'; 
-                video.volume = 1; 
-        }
+
         window.addEventListener('beforeunload', function (e) {
             var confirmationMessage = 'Are you sure you want to leave this masterpiece?';
 
