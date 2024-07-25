@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok</title>
+    <link rel="stylesheet" href="styles/prikol.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; 
+            filter: blur(1000px);
+            transition: filter 0.5s ease-out; 
+        }
+        .content {
+            position: relative;
+            z-index: 1; 
+            color: white; 
+            text-align: center;
+            padding: 20px;
+        }
+        .cookie-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: none;
+            z-index: 1000;
+            box-sizing: border-box;
+            overflow: auto;
+            font-size: 18px;
+        }
+        .cookie-banner p {
+            margin: 20px 0;
+        }
+        .cookie-banner button {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" id="videoBackground" src="prikol.mp4" autoplay loop></video>
+    <div class="content">
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <p>ПІДТВЕРДЬТЕ БУДЬ-ЛАСКА, МИ ВАС ЛЮБИМО!</p>
+        <button id="acceptCookies">Accept</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookieBanner');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const video = document.getElementById('videoBackground');
+
+            if (!document.cookie.split('; ').find(row => row.startsWith('cookies_accepted='))) {
+                cookieBanner.style.display = 'block';
+            }
+
+            acceptCookies.addEventListener('click', function() {
+                document.cookie = "cookies_accepted=true; path=/; max-age=" + (60*60*24*365); 
+                cookieBanner.style.display = 'none';
+                document.querySelector('.video-background').style.filter = 'none'; 
+                video.volume = 1; 
+            });
+
+            video.volume = 0;
+        });
+
+        window.addEventListener('beforeunload', function (e) {
+            var confirmationMessage = 'Are you sure you want to leave this masterpiece?';
+
+            (e || window.event).returnValue = confirmationMessage;
+
+            return confirmationMessage;
+        });
+    </script>
+</body>
+</html>
