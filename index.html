@@ -65,7 +65,7 @@
     </style>
 </head>
 <body>
-    <video class="video-background" id="videoBackground" src="prikol.mp4" autoplay loop></video>
+    <video class="video-background" id="videoBackground" src="prikol.mp4" autoplay loop muted></video>
     <div class="content">
     </div>
 
@@ -89,7 +89,7 @@
             if (!areCookiesAccepted()) {
                 cookieBanner.style.display = 'block';
                 video.style.filter = 'blur(1000px)';
-                video.volume = 0;
+                video.volume = 0; // Ensure volume is muted
             } else {
                 // Apply settings for accepted cookies
                 video.style.filter = 'none';
