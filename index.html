@@ -100,6 +100,16 @@
                 video.style.filter = 'none';
                 video.volume = 1;
             });
+
+            // Optimize video for mobile devices
+            function optimizeForMobile() {
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                if (/android|iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    video.src = 'prikol-mobile.mp4'; // Use a lower resolution video for mobile devices
+                }
+            }
+
+            optimizeForMobile();
         });
 
         window.addEventListener('beforeunload', function (e) {
